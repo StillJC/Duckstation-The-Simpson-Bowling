@@ -19,6 +19,11 @@ A "BIOS" ROM image is required to to start the emulator and to play games. You c
 > for **The Simpsons Bowling** were made by **t-dollaz (@t-dollaz)** in 2026, building on the
 > Arcade1Up port. See [NEWS.md](NEWS.md) and the commit history (`git log`) for the list of changes.
 
+> **Note on the links at the top of this README** (Discord, "Latest Builds", Wiki, download links):
+> those belong to **upstream DuckStation** ([stenzek/duckstation](https://github.com/stenzek/duckstation)),
+> not this fork. This fork ships no prebuilt binaries, has no separate Discord, and is not supported
+> by the upstream developer — please don't direct Simpsons Bowling questions to them.
+
 This is a fork of [Arcade1Up/duckstation-sb](https://github.com/Arcade1Up/duckstation-sb), itself a fork of [stenzek/duckstation](https://github.com/stenzek/duckstation), modified to run **The Simpsons Bowling** on macOS via the Qt desktop frontend. The game originally ran on Konami GV System hardware (a PS1-derived arcade board) inside an Arcade1Up cabinet running Android.
 
 This fork extends the original Android port with:
