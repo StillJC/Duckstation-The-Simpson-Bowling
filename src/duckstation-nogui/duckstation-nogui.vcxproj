@@ -47,5 +47,19 @@
     </Link>
   </ItemDefinitionGroup>
 
+  <!-- Deploy data/ (resources, database, shaders, inputprofiles) next to the exe, mirroring duckstation-qt.
+       Without this the nogui build has no resources/roboto-regular.ttf at runtime, so ImGui's font atlas
+       fails to load and the frontend crashes on startup. Uses $(OutDir) (= bin\$(Platform)\) since nogui
+       does not import QtCompile.props which defines $(BinaryOutputDir). -->
+  <ItemGroup>
+    <CommonDataFiles Include="$(SolutionDir)data\**\*.*">
+      <InProject>false</InProject>
+    </CommonDataFiles>
+  </ItemGroup>
+  <Target Name="CopyCommonDataFiles" AfterTargets="Build" Inputs="@(CommonDataFiles)" Outputs="@(CommonDataFiles -&gt; '$(OutDir)%(RecursiveDir)%(Filename)%(Extension)')">
+    <Message Text="Copying common data files" Importance="High" />
+    <Copy SourceFiles="@(CommonDataFiles)" DestinationFolder="$(OutDir)\%(RecursiveDir)" SkipUnchangedFiles="true" />
+  </Target>
+
   <Import Project="..\..\dep\msvc\vsprops\Targets.props" />
 </Project>

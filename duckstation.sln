@@ -41,6 +41,7 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "duckstation-qt", "src\duckstation-qt\duckstation-qt.vcxproj", "{28F14272-0EC4-41BB-849F-182ADB81AF70}"
 	ProjectSection(ProjectDependencies) = postProject
 		{6245DEC8-D2DA-47EE-A373-CBD6FCF3ECE6} = {6245DEC8-D2DA-47EE-A373-CBD6FCF3ECE6}
+		{72F9423C-91EE-4487-AAC6-555ED6F61AA1} = {72F9423C-91EE-4487-AAC6-555ED6F61AA1}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cubeb", "dep\cubeb\cubeb.vcxproj", "{72F9423C-91EE-4487-AAC6-555ED6F61AA1}"
@@ -97,6 +98,7 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "duckstation-nogui", "src\duckstation-nogui\duckstation-nogui.vcxproj", "{0A172B2E-DC67-49FC-A4C1-975F93C586C4}"
 	ProjectSection(ProjectDependencies) = postProject
 		{6245DEC8-D2DA-47EE-A373-CBD6FCF3ECE6} = {6245DEC8-D2DA-47EE-A373-CBD6FCF3ECE6}
+		{72F9423C-91EE-4487-AAC6-555ED6F61AA1} = {72F9423C-91EE-4487-AAC6-555ED6F61AA1}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "rcheevos", "dep\rcheevos\rcheevos.vcxproj", "{4BA0A6D4-3AE1-42B2-9347-096FD023FF64}"

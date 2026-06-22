@@ -82,9 +82,26 @@ cmake -B build -S . -DCMAKE_BUILD_TYPE=Release -DQt5_DIR=$(brew --prefix qt@5)/l
 cmake --build build --parallel
 ```
 
-**Windows** (Visual Studio / MSVC): open `duckstation.sln` and build the desired configuration.
-The vendored `dep/msvc` libraries are included; the remaining prebuilt Windows dependencies come
-from the dependencies bundle above.
+**Windows** (Visual Studio 2019/2022 — newer versions also work; accept the retarget prompt when it
+opens `duckstation.sln`). The vendored `dep/msvc` libraries are included. Two frontends can be built:
+
+- **`duckstation-nogui`** (SDL-based, **no Qt required**) — the simplest path, and what the Simpsons
+  Bowling work was validated against. Set the toolbar to **Release / x64**, then right-click the
+  **`duckstation-nogui`** project → **Build**. It pulls in `core`, `common`, `frontend-common`, and the
+  vendored deps — including **`cubeb`**, which is now a declared build dependency of the frontends so it
+  builds automatically (previously you had to build it by hand). The build also auto-copies `data\`
+  (`resources`, `database`, `shaders`, `inputprofiles`) next to the exe via a post-build target — the
+  runtime needs `resources\roboto-regular.ttf` for its font atlas, or the frontend crashes on startup.
+  Output: `bin\x64\duckstation-nogui-x64-Release.exe`.
+
+- **`duckstation-qt`** (full Qt GUI) — additionally requires **Qt 6.1.0 for MSVC2019 x64** (note: the
+  MSVC build links **Qt 6**, unlike the Qt 5 CMake path above — a quirk of this era's tree). Place it at
+  `dep\msvc\qt\6.1.0\msvc2019_64\`, or set the `QTDIR` environment variable to your Qt install.
+
+To run Simpsons Bowling under the nogui build: drop an empty `portable.txt` next to the exe (so it uses
+that folder for its data), put the 573 BIOS at `bios\999a01.7e`, and add a `[BIOS]` section
+(`SearchDirectory = bios`, `PathNTSCU = 999a01.7e`, `PatchFastBoot = false`) plus the `[KonamiGV]`
+flash/EEPROM paths (see **Required files**) to `settings.ini`. Then launch with the `.iso` as the argument.
 
 ### Controls
 
