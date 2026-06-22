@@ -49,7 +49,11 @@ All files can be extracted from `Bowlingunlocked.apk` (`res/raw/` for ROM files)
 > ⚠️ This is a years-old (Qt 5–era) DuckStation tree. Expect to supply period-appropriate
 > dependencies and toolchains, and to debug build issues yourself — see **Codebase status** above.
 
-**Common prerequisites:** CMake 3.x, a C++17 compiler, Qt 5, and SDL2.
+**Common prerequisites:**
+- [CMake](https://cmake.org/) 3.x and a C++17 compiler (Xcode/clang on macOS, MSVC on Windows, gcc/clang on Linux)
+- **Qt 5** — [open-source download](https://www.qt.io/download-open-source); on macOS via Homebrew [`qt@5`](https://formulae.brew.sh/formula/qt@5)
+- **SDL2** — [libsdl-org/SDL](https://github.com/libsdl-org/SDL) (or your distro/Homebrew package)
+- macOS Vulkan-over-Metal is provided by [MoltenVK](https://github.com/KhronosGroup/MoltenVK) (shipped as `libMoltenVK.dylib` inside the prebuilt bundle below)
 
 **Prebuilt dependencies (NOT included in this repo):** the build expects the prebuilt dependency
 bundle from [duckstation/dependencies](https://github.com/duckstation/dependencies) unpacked into
