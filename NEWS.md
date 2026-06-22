@@ -1,3 +1,4 @@
+- 2026/06/22: **The Simpsons Bowling** standalone port (by @t-dollaz) — macOS Qt frontend, configurable Konami GV BIOS/Flash/EEPROM paths, and mouse/trackball input, extending the Arcade1Up Android port. This is a *modified version* of DuckStation, distributed under the GPLv3.
 - 2021/07/25: Ability to boot games directly from CD-ROM added. You may want to reduce the readahead size to reduce hitches on seek/loading.
 - 2021/07/11: UWP/Xbox one port added. Follow the instructions in "Universal Windows Platform / Xbox One" below.
 - 2021/07/10: Direct3D 12 hardware renderer added. It does not support downsampling or postprocessing (was mainly intended for Xbox).

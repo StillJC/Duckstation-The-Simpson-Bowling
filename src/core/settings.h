@@ -26,7 +26,7 @@ public:
   virtual void SetStringValue(const char* section, const char* key, const char* value) = 0;
 
   virtual std::vector<std::string> GetStringList(const char* section, const char* key) = 0;
-  //virtual void SetStringList(const char* section, const char* key, const std::vector<std::string>& items) = 0;
+  virtual void SetStringList(const char* section, const char* key, const std::vector<std::string>& items) = 0;
   virtual bool RemoveFromStringList(const char* section, const char* key, const char* item) = 0;
   virtual bool AddToStringList(const char* section, const char* key, const char* item) = 0;
 

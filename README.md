@@ -14,21 +14,59 @@ DuckStation is an simulator/emulator of the Sony PlayStation(TM) console, focusi
 A "BIOS" ROM image is required to to start the emulator and to play games. You can use an image from any hardware version or region, although mismatching game regions and BIOS regions may have compatibility issues. A ROM image is not provided with the emulator for legal reasons, you should dump this from your own console using Caetla or other means.
 
 ## About this version
-This is a Duckstation port to run Simpsons Bowling on Arcade1Up's The Simpsons™ Arcade Machine. Changes were made specifically to run on the Android platform the Arcade Machine is running, and may not compile for other platforms.
 
-The associated ISO, EEPROM and BIOS are also omitted in this project. The required files are expected to be placed here:
+> **Modification notice (GPLv3 §5a):** This is a *modified version* of DuckStation. The changes
+> for **The Simpsons Bowling** were made by **t-dollaz (@t-dollaz)** in 2026, building on the
+> Arcade1Up port. See [NEWS.md](NEWS.md) and the commit history (`git log`) for the list of changes.
 
+This is a fork of [Arcade1Up/duckstation-sb](https://github.com/Arcade1Up/duckstation-sb), itself a fork of [stenzek/duckstation](https://github.com/stenzek/duckstation), modified to run **The Simpsons Bowling** on macOS via the Qt desktop frontend. The game originally ran on Konami GV System hardware (a PS1-derived arcade board) inside an Arcade1Up cabinet running Android.
+
+This fork extends the original Android port with:
+- macOS Qt frontend support (replaces Android-only frontend)
+- Configurable file paths for EEPROM, Flash ROMs, and BIOS via the Settings UI
+- Mouse/trackball input for the Konami GV trackball hardware (configurable sensitivity)
+- All Konami GV hardware emulation from the original fork: EXP1 bus, SCSI CD reads, Flash ROM, EEPROM, trackball, and player buttons
+
+### Required files
+
+The following ROM files are required and must be configured in **Settings → BIOS → Konami GV System**:
+
+- **BIOS** (`999a01.7e`, 512KB) — place in DuckStation's BIOS directory
+- **EEPROM** (128 bytes) — set path in Konami GV settings
+- **Flash 0–3** (2MB each) — set paths in Konami GV settings
+- **Disc image** (ISO) — add to game list normally
+
+All files can be extracted from `Bowlingunlocked.apk` (`res/raw/` for ROM files).
+
+### Building
+
+Requires Qt 5, SDL2, and the [duckstation/dependencies](https://github.com/duckstation/dependencies) prebuilt deps.
+
+```bash
+cmake -B build -S . -DCMAKE_BUILD_TYPE=Release -DQt5_DIR=$(brew --prefix qt@5)/lib/cmake/Qt5
+cmake --build build --parallel
 ```
-/sdcard/arcade1up/simpsons/arcade.iso
-/sdcard/arcade1up/simpsons/eeprom
-/sdcard/arcade1up/simpsons/flash0
-/sdcard/arcade1up/simpsons/flash1
-/sdcard/arcade1up/simpsons/flash2
-/sdcard/arcade1up/simpsons/flash3
-/sdcard/arcade1up/bios/999a01.7e
-```
+
+### Controls
+
+Set **Port 1** controller type to **Analog Controller (DualShock)** in Settings → Controllers.
+
+| Input | Binding |
+|---|---|
+| Trackball | Mouse (USB trackball works automatically) |
+| Throw button | Cross or Circle |
+| Start | Start |
+
+### License
+
+This project is licensed under the [GNU General Public License v3](LICENSE). See [CONTRIBUTORS.md](CONTRIBUTORS.md) for attribution.
 
 Additional code credit: Datapower Development
+
+**Legal:** This repository contains **source code only**. No BIOS, game disc, Flash, or EEPROM
+images are included or distributed — *The Simpsons Bowling* and the Konami GV BIOS are copyrighted
+by their respective owners. You must supply your own dumped files (see **Required files** above).
+This project is not affiliated with or endorsed by Konami, Sony, or Arcade1Up.
 
 ## Latest News
 Older entries are available at https://github.com/stenzek/duckstation/blob/master/NEWS.md

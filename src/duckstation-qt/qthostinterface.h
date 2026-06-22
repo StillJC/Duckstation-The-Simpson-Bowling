@@ -219,6 +219,7 @@ protected:
   void OnRunningGameChanged(const std::string& path, CDImage* image, const std::string& game_code,
                             const std::string& game_title) override;
 
+  void UpdateInputMap() override;
   void SetDefaultSettings(SettingsInterface& si) override;
   void SetDefaultSettings() override;
   void ApplySettings(bool display_osd_messages) override;

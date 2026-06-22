@@ -92,6 +92,31 @@ BIOSSettingsWidget::BIOSSettingsWidget(QtHostInterface* host_interface, QWidget*
 
   SettingWidgetBinder::BindWidgetToBoolSetting(m_host_interface, m_ui.enableTTYOutput, "BIOS", "PatchTTYEnable");
   SettingWidgetBinder::BindWidgetToBoolSetting(m_host_interface, m_ui.fastBoot, "BIOS", "PatchFastBoot");
+  SettingWidgetBinder::BindWidgetToFloatSetting(m_host_interface, m_ui.trackballSensitivity, "KonamiGV",
+                                                "TrackballSensitivity", 1.0f);
+  // Write the default immediately so it's present in the ini even if the user never touches the spinbox.
+  if (m_host_interface->GetStringSettingValue("KonamiGV", "TrackballSensitivity", "").empty())
+    m_host_interface->SetFloatSettingValue("KonamiGV", "TrackballSensitivity", 1.0f);
+
+  // Konami GV file path helpers
+  auto bindKonamiPath = [this](QLineEdit* edit, QPushButton* browse, const char* key) {
+    edit->setText(
+      QString::fromStdString(m_host_interface->GetStringSettingValue("KonamiGV", key, "")));
+    connect(edit, &QLineEdit::textChanged, [this, key](const QString& text) {
+      m_host_interface->SetStringSettingValue("KonamiGV", key, text.toStdString().c_str());
+    });
+    connect(browse, &QPushButton::clicked, [this, edit]() {
+      QString path = QFileDialog::getOpenFileName(QtUtils::GetRootWidget(this), tr("Select File"), edit->text());
+      if (!path.isEmpty())
+        edit->setText(path);
+    });
+  };
+
+  bindKonamiPath(m_ui.konamiEEPROMPath,  m_ui.browseKonamiEEPROMPath,  "EEPROMPath");
+  bindKonamiPath(m_ui.konamiFlashPath0,  m_ui.browseKonamiFlashPath0,  "FlashPath0");
+  bindKonamiPath(m_ui.konamiFlashPath1,  m_ui.browseKonamiFlashPath1,  "FlashPath1");
+  bindKonamiPath(m_ui.konamiFlashPath2,  m_ui.browseKonamiFlashPath2,  "FlashPath2");
+  bindKonamiPath(m_ui.konamiFlashPath3,  m_ui.browseKonamiFlashPath3,  "FlashPath3");
 
   dialog->registerWidgetHelp(m_ui.fastBoot, tr("Fast Boot"), tr("Unchecked"),
                              tr("Patches the BIOS to skip the console's boot animation. Does not work with all games, "

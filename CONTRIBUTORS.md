@@ -6,6 +6,7 @@ The following people have contributed to the project in some way, and are credit
 - @ggrtk
 - @CookiePLMonster
 - @PookaMustard
+- @t-dollaz
 
 ## Translators
 - Anderson Cardoso - Portuguese (Br)

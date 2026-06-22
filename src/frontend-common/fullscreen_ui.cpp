@@ -4072,7 +4072,7 @@ static void DrawAchievement(const Cheevos::Achievement& cheevo)
   TinyString id_str;
   id_str.Format("%u", cheevo.id);
 
-  const auto progress = 0;//Cheevos::GetAchievementProgress(cheevo);
+  const auto progress = std::make_pair(0, 0);//Cheevos::GetAchievementProgress(cheevo);
   const bool is_measured = false;//progress.second != 0;
 
   ImRect bb;

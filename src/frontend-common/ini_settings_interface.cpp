@@ -22,10 +22,9 @@ INISettingsInterface::INISettingsInterface(std::string filename) : m_filename(st
 
 INISettingsInterface::~INISettingsInterface()
 {
-  //if (m_dirty)
-    //Save();
+  if (m_dirty)
+    Save();
 }
-/*
 bool INISettingsInterface::Save()
 {
   SI_Error err = SI_FAIL;
@@ -44,7 +43,7 @@ bool INISettingsInterface::Save()
 
   m_dirty = false;
   return true;
-}*/
+}
 
 void INISettingsInterface::Clear()
 {
@@ -121,7 +120,6 @@ std::vector<std::string> INISettingsInterface::GetStringList(const char* section
                  [](const CSimpleIniA::Entry& it) { return std::string(it.pItem); });
   return ret;
 }
-/*
 void INISettingsInterface::SetStringList(const char* section, const char* key, const std::vector<std::string>& items)
 {
   m_dirty = true;
@@ -129,7 +127,7 @@ void INISettingsInterface::SetStringList(const char* section, const char* key, c
 
   for (const std::string& sv : items)
     m_ini.SetValue(section, key, sv.c_str(), nullptr, false);
-}*/
+}
 
 bool INISettingsInterface::RemoveFromStringList(const char* section, const char* key, const char* item)
 {

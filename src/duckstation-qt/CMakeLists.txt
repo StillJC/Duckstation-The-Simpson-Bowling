@@ -211,8 +211,8 @@ if(APPLE)
                      COMMAND cp ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/translations/*.qm $<TARGET_FILE_DIR:duckstation-qt>/translations)
 
   # Copy MoltenVK into the bundle
-  target_sources(duckstation-qt PRIVATE "${CMAKE_SOURCE_DIR}/dep/mac/MoltenVK/libvulkan.dylib")
-  set_source_files_properties("${CMAKE_SOURCE_DIR}/dep/mac/MoltenVK/libvulkan.dylib" PROPERTIES MACOSX_PACKAGE_LOCATION Frameworks)
+  target_sources(duckstation-qt PRIVATE "${CMAKE_SOURCE_DIR}/dep/prebuilt/macos-universal/lib/libMoltenVK.dylib")
+  set_source_files_properties("${CMAKE_SOURCE_DIR}/dep/prebuilt/macos-universal/lib/libMoltenVK.dylib" PROPERTIES MACOSX_PACKAGE_LOCATION Frameworks)
 
   # Update library references to make the bundle portable
   include(DolphinPostprocessBundle)
@@ -222,5 +222,6 @@ if(APPLE)
     POST_BUILD COMMAND
     ${CMAKE_INSTALL_NAME_TOOL} -add_rpath "@executable_path/../Frameworks/"
     $<TARGET_FILE:duckstation-qt>)
+
 endif()
 

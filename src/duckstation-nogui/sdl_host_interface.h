@@ -20,6 +20,8 @@ public:
   bool IsFullscreen() const override;
   bool SetFullscreen(bool enabled) override;
 
+  void UpdateInputMap() override {}
+
 protected:
   void PollAndUpdate() override;
 

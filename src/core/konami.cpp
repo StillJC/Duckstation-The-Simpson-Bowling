@@ -2,22 +2,18 @@
 #include "common/file_system.h"
 #include "common/log.h"
 #include "cpu_core.h"
+#include "host_display.h"
+#include "host_interface.h"
 #include "interrupt_controller.h"
 #include "konami.h"
+#include "system.h"
 #include "timers.h"
 #include "timing_event.h"
+#include <algorithm>
+#include <limits>
 #include <stdio.h>
 
 Log_SetChannel(Konami);
-
-#define EEPROM_FILE "/sdcard/arcade1up/simpsons/eeprom"
-
-#define FLASH_FILE0 "/sdcard/arcade1up/simpsons/flash0"
-#define FLASH_FILE1 "/sdcard/arcade1up/simpsons/flash1"
-#define FLASH_FILE2 "/sdcard/arcade1up/simpsons/flash2"
-#define FLASH_FILE3 "/sdcard/arcade1up/simpsons/flash3"
-
-#define SCSI_CD_IMAGE "/sdcard/arcade1up/simpsons/arcade.iso"
 
 // SCSI
 enum {
@@ -60,8 +56,11 @@ static std::FILE* EepromFp;
 static uint16_t Eeprom[64];
 
 // Trackball
+static s32 TrackballMouseX;
+static s32 TrackballMouseY;
 static u16 TrackballX;
 static u16 TrackballY;
+static float TrackballSensitivity = 1.0f;
 
 // Score table
 static struct {
@@ -114,13 +113,23 @@ static void AssertScsiInterrupt(void)
 
 void KonamiInit(void)
 {
-  LoadEepromFile(EEPROM_FILE);
-  LoadFlashFile(FLASH_FILE0, Flash[0]);
-  LoadFlashFile(FLASH_FILE1, Flash[1]);
-  LoadFlashFile(FLASH_FILE2, Flash[2]);
-  LoadFlashFile(FLASH_FILE3, Flash[3]);
+  const std::string eeprom_path = g_host_interface->GetStringSettingValue("KonamiGV", "EEPROMPath", "");
+  const std::string flash0_path = g_host_interface->GetStringSettingValue("KonamiGV", "FlashPath0", "");
+  const std::string flash1_path = g_host_interface->GetStringSettingValue("KonamiGV", "FlashPath1", "");
+  const std::string flash2_path = g_host_interface->GetStringSettingValue("KonamiGV", "FlashPath2", "");
+  const std::string flash3_path = g_host_interface->GetStringSettingValue("KonamiGV", "FlashPath3", "");
 
-  ScsiCd = FileSystem::OpenCFile(SCSI_CD_IMAGE, "rb");
+  if (!eeprom_path.empty()) LoadEepromFile(eeprom_path.c_str());
+  if (!flash0_path.empty()) LoadFlashFile(flash0_path.c_str(), Flash[0]);
+  if (!flash1_path.empty()) LoadFlashFile(flash1_path.c_str(), Flash[1]);
+  if (!flash2_path.empty()) LoadFlashFile(flash2_path.c_str(), Flash[2]);
+  if (!flash3_path.empty()) LoadFlashFile(flash3_path.c_str(), Flash[3]);
+
+  ScsiCd = FileSystem::OpenCFile(System::GetRunningPath().c_str(), "rb");
+
+  TrackballMouseX = g_host_interface->GetDisplay()->GetMousePositionX();
+  TrackballMouseY = g_host_interface->GetDisplay()->GetMousePositionY();
+  TrackballSensitivity = g_host_interface->GetFloatSettingValue("KonamiGV", "TrackballSensitivity", 1.0f);
 }
 
 void KonamiTerm(void)
@@ -423,6 +432,20 @@ void KonamiEepromWrite(u32 Size, u32 Offset, u32 Value)
 // Trackball
 void KonamiTrackballRead(u32 Size, u32 Offset, u32& Value)
 {
+  if (Offset == 0x006800C0)
+  {
+    // Sample mouse delta on first register read each cycle
+    const HostDisplay* display = g_host_interface->GetDisplay();
+    const s32 mx = display->GetMousePositionX();
+    const s32 my = display->GetMousePositionY();
+    const s32 dx = mx - TrackballMouseX;
+    const s32 dy = my - TrackballMouseY;
+    TrackballMouseX = mx;
+    TrackballMouseY = my;
+    TrackballX = static_cast<u16>(std::clamp(static_cast<s32>(dx * TrackballSensitivity), -2048, 2047));
+    TrackballY = static_cast<u16>(std::clamp(static_cast<s32>(dy * TrackballSensitivity), -2048, 2047));
+  }
+
   switch (Offset)
   {
     case 0x006800C0:

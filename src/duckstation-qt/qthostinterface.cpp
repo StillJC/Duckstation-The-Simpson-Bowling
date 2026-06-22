@@ -838,6 +838,11 @@ void QtHostInterface::SetMouseMode(bool relative, bool hide_cursor)
   emit mouseModeRequested(relative, hide_cursor);
 }
 
+void QtHostInterface::UpdateInputMap()
+{
+  updateInputMap();
+}
+
 void QtHostInterface::updateInputMap()
 {
   if (!isOnWorkerThread())

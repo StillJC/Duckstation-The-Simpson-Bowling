@@ -107,6 +107,30 @@ if(USE_X11)
   target_include_directories(frontend-common PRIVATE "${X11_INCLUDE_DIR}")
 endif()
 
+if(ENABLE_CHEEVOS)
+  target_compile_definitions(frontend-common PUBLIC -DWITH_CHEEVOS=1)
+  target_sources(frontend-common PRIVATE
+    cheevos.cpp
+    cheevos.h
+    http_downloader.cpp
+    http_downloader.h
+  )
+  target_link_libraries(frontend-common PRIVATE rcheevos)
+  if(WIN32)
+    target_sources(frontend-common PRIVATE
+      http_downloader_winhttp.cpp
+      http_downloader_winhttp.h
+    )
+    target_link_libraries(frontend-common PRIVATE winhttp)
+  else()
+    target_sources(frontend-common PRIVATE
+      http_downloader_curl.cpp
+      http_downloader_curl.h
+    )
+    target_link_libraries(frontend-common PRIVATE CURL::libcurl)
+  endif()
+endif()
+
 if(ENABLE_DISCORD_PRESENCE)
   target_compile_definitions(frontend-common PUBLIC -DWITH_DISCORD_PRESENCE=1)
   target_link_libraries(frontend-common PRIVATE discord-rpc)
