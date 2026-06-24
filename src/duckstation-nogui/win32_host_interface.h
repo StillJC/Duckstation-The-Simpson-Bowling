@@ -24,6 +24,11 @@ protected:
 
   void PollAndUpdate() override;
 
+  // The Win32 frontend was never built by the fork author; CommonHostInterface::UpdateInputMap() is pure
+  // virtual, so without this override Win32HostInterface stays abstract and won't instantiate (MSVC C2259).
+  // Matches the empty stub already present in sdl_host_interface.h.
+  void UpdateInputMap() override {}
+
 private:
   static LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
