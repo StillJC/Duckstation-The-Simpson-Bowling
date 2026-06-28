@@ -155,10 +155,28 @@ bool GameList::GetGameListEntry(const std::string& path, GameListEntry* entry)
   entry->type = GameListEntryType::Disc;
   entry->compatibility_rating = GameListCompatibilityRating::Unknown;
 
-  // try the database first
+// try the database first
   LoadDatabase();
   GameDatabaseEntry dbentry;
-  if (!m_database.GetEntryForDisc(cdi.get(), &dbentry))
+  const std::string_view filename_code = FileSystem::GetFileTitleFromPath(path);
+
+  if (filename_code == "arcade")
+  {
+    // Dedicated Simpsons Bowling arcade ISO.
+    entry->code = "GQ829-UAA";
+    entry->title = "The Simpsons Bowling";
+    entry->genre = "Sports";
+    entry->developer = "Konami";
+    entry->publisher = "Konami";
+    entry->compatibility_rating = GameListCompatibilityRating::Unknown;
+    entry->release_date = 0;
+    entry->min_players = 1;
+    entry->max_players = 4;
+    entry->min_blocks = 0;
+    entry->max_blocks = 0;
+    entry->supported_controllers = ~0u;
+  }
+  else if (!m_database.GetEntryForDisc(cdi.get(), &dbentry))
   {
     // no game code, so use the filename title
     entry->code = System::GetGameCodeForImage(cdi.get(), true);
@@ -186,13 +204,15 @@ bool GameList::GetGameListEntry(const std::string& path, GameListEntry* entry)
     entry->max_blocks = static_cast<u8>(dbentry.max_blocks);
     entry->supported_controllers = dbentry.supported_controllers_mask;
   }
-
   // region detection
   entry->region = System::GetRegionFromSystemArea(cdi.get());
+
   if (entry->region == DiscRegion::Other)
     entry->region = System::GetRegionForCode(entry->code);
 
-  if (!entry->code.empty())
+  // Dedicated Simpsons Bowling arcade ISO.
+  if (filename_code == "arcade")
+    entry->region = DiscRegion::NTSC_U;
   {
     const GameListCompatibilityEntry* compatibility_entry = GetCompatibilityEntryForCode(entry->code);
     if (compatibility_entry)

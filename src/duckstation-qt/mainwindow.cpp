@@ -53,11 +53,11 @@ ALWAYS_INLINE static QString getWindowTitle(const QString& game_title)
   if (game_title.isEmpty())
   {
 #if defined(_DEBUG)
-    return QStringLiteral("DuckStation [Debug] %1 (%2)").arg(g_scm_tag_str).arg(g_scm_branch_str);
+    return QStringLiteral("Duckstation - The Simpsons Bowling (GQ829 UAA) [Debug] %1 (%2)").arg(g_scm_tag_str).arg(g_scm_branch_str);
 #elif defined(_DEBUGFAST)
-    return QStringLiteral("DuckStation [DebugFast] %1 (%2)").arg(g_scm_tag_str).arg(g_scm_branch_str);
+    return QStringLiteral("Duckstation - The Simpsons Bowling (GQ829 UAA) [DebugFast] %1 (%2)").arg(g_scm_tag_str).arg(g_scm_branch_str);
 #else
-    return QStringLiteral("DuckStation %1 (%2)").arg(g_scm_tag_str).arg(g_scm_branch_str);
+    return QStringLiteral("Duckstation - The Simpsons Bowling (GQ829 UAA)").arg(g_scm_tag_str).arg(g_scm_branch_str);
 #endif
   }
 

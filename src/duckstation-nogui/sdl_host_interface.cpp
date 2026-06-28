@@ -151,7 +151,7 @@ bool SDLHostInterface::RequestRenderWindowSize(s32 new_window_width, s32 new_win
 
 ALWAYS_INLINE static TinyString GetWindowTitle()
 {
-  return TinyString::FromFormat("DuckStation %s (%s)", g_scm_tag_str, g_scm_branch_str);
+  return TinyString::FromFormat("DuckStation - The Simpsons Bowling (GQ829 UAA)", g_scm_tag_str, g_scm_branch_str);
 }
 
 bool SDLHostInterface::CreatePlatformWindow()

@@ -442,7 +442,7 @@ void KonamiTrackballRead(u32 Size, u32 Offset, u32& Value)
     const s32 dy = my - TrackballMouseY;
     TrackballMouseX = mx;
     TrackballMouseY = my;
-    TrackballX = static_cast<u16>(std::clamp(static_cast<s32>(dx * TrackballSensitivity), -2048, 2047));
+    TrackballX = static_cast<u16>(std::clamp(static_cast<s32>(-dx * TrackballSensitivity), -2048, 2047));
     TrackballY = static_cast<u16>(std::clamp(static_cast<s32>(dy * TrackballSensitivity), -2048, 2047));
   }
 

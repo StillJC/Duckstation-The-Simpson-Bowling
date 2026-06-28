@@ -56,7 +56,6 @@
     <ClCompile Include="gpu_sw_backend.cpp" />
     <ClCompile Include="libcrypt_game_codes.cpp" />
     <ClCompile Include="texture_replacements.cpp" />
-    <ClCompile Include="gdb_protocol.h" />
     <ClCompile Include="multitap.cpp" />
     <ClCompile Include="gpu_hw_d3d12.cpp" />
     <ClCompile Include="konami.cpp" />
@@ -121,6 +120,6 @@
     <ClInclude Include="shader_cache_version.h" />
     <ClInclude Include="multitap.h" />
     <ClInclude Include="gpu_hw_d3d12.h" />
-    <ClInclude Include="konami.h" />
+    <ClInclude Include="gdb_protocol.h" />
   </ItemGroup>
 </Project>

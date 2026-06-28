@@ -59,7 +59,7 @@ bool Win32HostInterface::RegisterWindowClass()
 
 bool Win32HostInterface::CreatePlatformWindow()
 {
-  m_hwnd = CreateWindowExW(WS_EX_CLIENTEDGE, WINDOW_CLASS_NAME, L"DuckStation", WS_OVERLAPPEDWINDOW, CW_USEDEFAULT,
+  m_hwnd = CreateWindowExW(WS_EX_CLIENTEDGE, WINDOW_CLASS_NAME, L"Duckstation - The Simpsons Bowling (GQ829 UAA)", WS_OVERLAPPEDWINDOW, CW_USEDEFAULT,
                            CW_USEDEFAULT, DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT, nullptr, nullptr,
                            GetModuleHandleA(nullptr), this);
   if (!m_hwnd)

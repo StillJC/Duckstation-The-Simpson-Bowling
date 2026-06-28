@@ -284,12 +284,23 @@ bool D3D12HostDisplay::InitializeRenderDevice(std::string_view shader_cache_dire
 
 void D3D12HostDisplay::DestroyRenderDevice()
 {
+  if (!g_d3d12_context)
+    return;
+
   g_d3d12_context->ExecuteCommandList(true);
+
+  // These can own D3D12 textures/descriptors.
+  // They must be released while the D3D12 context and descriptor heaps still exist.
+  ClearSoftwareCursor();
+  ClearDisplayTexture();
+
+  m_display_pixels_texture.Destroy(false);
 
   DestroyResources();
   DestroyRenderSurface();
-  if (g_d3d12_context)
-    g_d3d12_context->Destroy();
+
+  g_d3d12_context->ExecuteCommandList(true);
+  g_d3d12_context->Destroy();
 }
 
 bool D3D12HostDisplay::MakeRenderContextCurrent()
