@@ -176,7 +176,7 @@ The bezel is intended for cabinet display use and should be placed outside the a
 This fork was built using **Visual Studio 2026** on Windows.
 
 > ⚠️ This is a years-old (Qt 5–era) DuckStation tree. Expect to supply period-appropriate
-> dependencies and toolchains, and to debug build issues yourself — see **Codebase status** above.
+> dependencies and toolchains, and to debug build issues yourself.
 
 ### Required Visual Studio Components
 
@@ -195,7 +195,7 @@ Also install:
 
 * Python 3
 * CMake
-* Qt 6 for MSVC 64-bit
+* Qt 6.1.0 for MSVC 64-bit
 * Git
 
 Qt must match the MSVC toolchain being used.
@@ -246,7 +246,7 @@ duckstation-qt-x64-Release.exe
 
 A valid Konami GV BIOS is required.
 
-Place BIOS files in:
+Place BIOS file in:
 
 ```text
 bios/
