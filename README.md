@@ -57,28 +57,33 @@ Major changes and updates made in this fork:
 * Reduced focus on normal DuckStation frontend/library usage
 * Cleaned up behavior for one-game dedicated use
 
-Required Original Files
+### Required Original Files
 
-This repository does not include any copyrighted game, BIOS, EEPROM, Flash, APK, or disc image files.
+This repository does **not** include any copyrighted game, BIOS, EEPROM, Flash, APK, or disc image files.
 
 To run the game, you must supply your own dumped original files.
 
-The setup used for this fork was based on the Arcade1Up Simpsons Bowling Android APK, specifically:
+The setup used for this fork was based on the **Arcade1Up Simpsons Bowling Android APK**:
 
+```text
 Arcade1Up_1.43.apk
+```
 
 From that original APK/game dump, the required files are:
 
-999a01.7e       PlayStation/Konami GV BIOS, 512 KB
-eeprom          128 bytes
-flash0          2 MB
-flash1          2 MB
-flash2          2 MB
-flash3          2 MB
-arcade.iso      Simpsons Bowling disc image
+| File | Description |
+|---|---|
+| `999a01.7e` | PlayStation/Konami GV BIOS, 512 KB |
+| `eeprom.bin` | EEPROM data, 128 bytes |
+| `flash0.bin` | Flash ROM 0, 2 MB |
+| `flash1.bin` | Flash ROM 1, 2 MB |
+| `flash2.bin` | Flash ROM 2, 2 MB, if present in your dump |
+| `flash3.bin` | Flash ROM 3, 2 MB |
+| `arcade.iso` | Simpsons Bowling disc image |
 
 Recommended folder layout:
 
+```text
 DuckStation Folder/
 ├─ duckstation-qt-x64-Release.exe
 ├─ portable.txt
@@ -89,17 +94,20 @@ DuckStation Folder/
    ├─ eeprom.bin
    ├─ flash0.bin
    ├─ flash1.bin
+   ├─ flash2.bin
    └─ flash3.bin
+```
 
 The game must be run from the ISO image:
 
+```text
 simpsons/arcade.iso
+```
 
-## MAME romset files are untested with this fork.
+MAME ROM & CHD version are untested in this fork.
 
-These files must come from your own legally obtained original Arcade1Up APK source. They are not included in this repository and will not be 
-committed to GitHub.
-
+These files must come from your own legally obtained original Arcade1Up APK source. 
+They are not included in this repository and should not be committed to GitHub.
 ## Running the Game
 
 Recommended command:
