@@ -175,6 +175,9 @@ The bezel is intended for cabinet display use and should be placed outside the a
 
 This fork was built using **Visual Studio 2026** on Windows.
 
+> ⚠️ This is a years-old (Qt 5–era) DuckStation tree. Expect to supply period-appropriate
+> dependencies and toolchains, and to debug build issues yourself — see **Codebase status** above.
+
 ### Required Visual Studio Components
 
 Install the following through the Visual Studio Installer:
@@ -196,6 +199,10 @@ Also install:
 * Git
 
 Qt must match the MSVC toolchain being used.
+
+**Prebuilt dependencies (NOT included in this repo):** the build expects the prebuilt dependency
+bundle from [duckstation/dependencies](https://github.com/duckstation/dependencies) unpacked into
+`dep/prebuilt/<platform>/`. These large binary deps are intentionally not committed here.
 
 ### Clone
 
