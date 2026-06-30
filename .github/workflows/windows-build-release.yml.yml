@@ -17,7 +17,7 @@ jobs:
       BUILD_CONFIGURATION: Release
       BUILD_PLATFORM: x64
       QT_VERSION: 6.1.0
-      QT_ARCH: win64_msvc2019_64
+      QT_INSTALL_ARCH: win64_msvc2019_64
 
     steps:
       - name: Checkout repo
@@ -30,19 +30,24 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           python -m pip install aqtinstall
-          python -m aqt install-qt windows desktop $env:QT_VERSION $env:QT_ARCH -O C:\Qt
+          python -m aqt install-qt windows desktop $env:QT_VERSION $env:QT_INSTALL_ARCH -O C:\Qt
 
-          $qtPath = "C:\Qt\$env:QT_VERSION\$env:QT_ARCH"
+          $qmake = Get-ChildItem -Path "C:\Qt" -Recurse -Filter qmake.exe | Select-Object -First 1
 
-          if (-not (Test-Path $qtPath)) {
-            throw "Qt install path not found: $qtPath"
+          if (-not $qmake) {
+            Get-ChildItem -Path "C:\Qt" -Recurse
+            throw "qmake.exe not found under C:\Qt"
           }
+
+          $qtPath = $qmake.Directory.FullName
 
           echo "QTDIR=$qtPath" >> $env:GITHUB_ENV
           echo "Qt6_DIR=$qtPath" >> $env:GITHUB_ENV
+          echo "$qtPath" >> $env:GITHUB_PATH
           echo "$qtPath\bin" >> $env:GITHUB_PATH
 
-          Write-Host "QTDIR set to $qtPath"
+          Write-Host "Qt found at: $qtPath"
+          Write-Host "QTDIR set to: $qtPath"
 
       - name: Find MSBuild
         shell: pwsh
@@ -101,10 +106,8 @@ jobs:
             Copy-Item "$($qtExe.Directory.FullName)\*" $packageRoot -Recurse -Force
           }
 
-          # Do not ship game/media/legal-sensitive files.
           Get-ChildItem $packageRoot -Recurse -Include *.iso,*.chd,*.cue,*.bin,*.apk,*.rom,*.key -ErrorAction SilentlyContinue | Remove-Item -Force -ErrorAction SilentlyContinue
 
-          # Create expected empty user folders.
           New-Item -ItemType Directory -Path "$packageRoot\simpsons" -Force | Out-Null
           New-Item -ItemType Directory -Path "$packageRoot\bios" -Force | Out-Null
           New-Item -ItemType Directory -Path "$packageRoot\bezel" -Force | Out-Null
