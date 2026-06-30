@@ -330,8 +330,9 @@ void KonamiP1Read(u32 Size, u32 Offset, u32& Value)
   if (CurrentButtons & 0x4000) Value &= ~(1 << 4); // BUTTON 1 PLAYER 1
   if (CurrentButtons & 0x2000) Value &= ~(1 << 4); // BUTTON 1 PLAYER 1
   if (CurrentButtons & 0x0D08) Value &= ~(1 << 9);  // START
-  //if (CurrentButtons & 0x0001) Value &= ~(1 << 10); // COIN
-  //if (CurrentButtons & 0x0001) Value &= ~(3 << 11);
+  if (CurrentButtons & 0x0001) Value &= ~(1 << 10); // COIN
+  if (CurrentButtons & 0x0002) Value &= ~(1 << 11); // SERVICE / L3
+  if (CurrentButtons & 0x0004) Value &= ~(1 << 12); // TEST / R3
 }
 
 void KonamiP1Write(u32 Size, u32 Offset, u32 Value)
