@@ -156,6 +156,9 @@ Set **Port 1** controller type to **Analog Controller (DualShock)** in Settings 
 | Trackball | Mouse (USB trackball works automatically) |
 | Throw button | Cross or Circle |
 | Start | Start |
+| Coin | Select |
+| Test | R3 |
+| Service | L3 |
 
 ## Bezel Overlay
 
